@@ -1,0 +1,191 @@
+You are acting as a senior full-stack software engineer, AI systems engineer, and technical architect.
+
+Your task is to BUILD (not just design) a complete MVP system called **EdoSecure AI** — an AI-powered security intelligence and surveillance coordination platform intended for a government security demo and pilot deployment.
+
+This is a HANDS-ON IMPLEMENTATION request.
+
+========================
+PROJECT GOAL
+========================
+Develop a fully functional MVP that demonstrates:
+- Centralized security command dashboard
+- AI-powered video analytics
+- Real-time incident detection and alerts
+- Map-based incident visualization
+- Scalable backend architecture
+- Clean, professional UI suitable for government presentation
+
+The system must be practical, demo-ready, and structured in a way that allows easy modification and extension by a human developer (me).
+
+========================
+BUILD APPROACH
+========================
+You must:
+1. Build the system STEP BY STEP
+2. Start from FRONTEND → BACKEND → AI MODULES → INTEGRATIONS
+3. Generate ACTUAL CODE for EVERY FILE involved
+4. Clearly explain:
+   - What each file does
+   - How files connect together
+5. Pause after each major phase so I can review and request changes
+6. Use clean, readable, well-structured code (production-minded, not hacky)
+
+Do NOT skip steps.
+Do NOT give pseudo-code unless explicitly requested.
+Do NOT bundle everything in one message — work incrementally.
+
+========================
+TECH STACK (MVP STANDARD)
+========================
+
+FRONTEND:
+- Next.js (React)
+- Tailwind CSS
+- Map library (Leaflet or Google Maps)
+- WebSocket support for real-time updates
+
+BACKEND:
+- Python
+- FastAPI
+- PostgreSQL
+- WebSockets
+- REST APIs
+
+AI / VIDEO ANALYTICS:
+- Python
+- OpenCV
+- YOLO (person, crowd, motion detection)
+- Rule-based alert logic
+- Support for recorded video (for demo) and live streams (future)
+
+OTHER:
+- Docker-ready structure (optional but preferred)
+- Clear folder structure
+- Environment variables for secrets
+- Mock or simulated drone & CCTV feeds for MVP
+
+========================
+CORE FEATURES TO IMPLEMENT
+========================
+
+1. FRONTEND DASHBOARD
+- Secure login (basic MVP auth)
+- Live video feed panels (simulated streams allowed)
+- Incident alert panel (real-time)
+- Edo State map view with incident pins
+- Heat map view (historical incidents)
+- Clean, calm, government-friendly UI
+
+2. BACKEND SERVICES
+- Authentication service
+- Incident management service
+- Video stream ingestion endpoints
+- AI inference trigger endpoints
+- Alert broadcasting (WebSockets)
+- Incident storage (PostgreSQL)
+
+3. AI SMART CAPABILITIES
+- Person detection from video
+- Crowd detection (basic threshold-based)
+- Motion anomaly detection
+- Night activity detection (simple rule-based)
+- Short video clip capture on incident
+- Confidence score per alert
+
+4. ALERT SYSTEM
+- Real-time dashboard alerts
+- API-based alert publishing
+- Simulated SMS/email/WhatsApp hooks (MVP-level)
+
+5. MAP & ANALYTICS
+- Incident geolocation storage
+- Live incident markers
+- Historical heat map generation
+- Time-based filtering
+
+========================
+PROJECT STRUCTURE REQUIREMENTS
+========================
+
+You must define and generate code for:
+- Full frontend folder structure
+- Full backend folder structure
+- AI service modules
+- Configuration files
+- Environment variable examples
+- README instructions (run locally)
+
+Each file must be provided with:
+- Filename
+- Purpose explanation
+- Full code content
+
+========================
+WORKFLOW YOU MUST FOLLOW
+========================
+
+PHASE 1 – FRONTEND
+- Project setup
+- Folder structure
+- UI layout
+- Dashboard pages
+- Map integration
+- WebSocket integration
+
+PHASE 2 – BACKEND
+- FastAPI setup
+- Database models
+- API routes
+- WebSocket server
+- Incident handling logic
+
+PHASE 3 – AI MODULES
+- Video ingestion
+- AI inference pipeline
+- Rule engine
+- Alert generation
+
+PHASE 4 – INTEGRATION
+- Frontend ↔ Backend
+- Backend ↔ AI service
+- Real-time alert flow
+
+PHASE 5 – MVP POLISH
+- Demo data
+- Simulated incidents
+- Performance sanity checks
+- Deployment readiness notes
+
+========================
+IMPORTANT CONSTRAINTS
+========================
+
+- This is NOT a tutorial.
+- This is NOT theoretical.
+- This is NOT a student exercise.
+
+This is a GOVERNMENT-FACING MVP.
+
+Code must be:
+- Understandable
+- Modular
+- Editable by me
+- Demo-stable
+
+========================
+COMMUNICATION RULES
+========================
+
+- Speak like a senior engineer
+- Be direct and structured
+- Ask clarification ONLY when necessary
+- After each phase, stop and wait for approval before continuing
+
+========================
+STARTING INSTRUCTION
+========================
+
+Begin with:
+PHASE 1 – FRONTEND ARCHITECTURE & SETUP
+
+Explain the frontend folder structure first, then generate the code file by file.
