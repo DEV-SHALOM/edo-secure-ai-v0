@@ -8,6 +8,7 @@ from database import engine, Base
 from routers import auth, incidents, cameras
 from websocket_manager import manager
 from demo_data import seed_demo_data
+from ai_service import ai_service
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -38,6 +39,13 @@ app.include_router(cameras.router, prefix="/api/cameras", tags=["Cameras"])
 @app.get("/api/health")
 def health_check():
     return {"status": "healthy", "service": "EdoSecure AI"}
+
+@app.post("/api/ai/process")
+async def process_video_feed(camera_id: str):
+    # Simulate receiving a trigger to process a specific camera feed
+    # In reality, this might start a thread that reads from an RTSP stream
+    result = ai_service.process_frame(None)
+    return {"camera_id": camera_id, "analysis": result}
 
 @app.websocket("/ws/alerts")
 async def websocket_endpoint(websocket: WebSocket):
@@ -75,14 +83,19 @@ async def simulate_incidents():
         
         db = SessionLocal()
         try:
+            # Use AI Service to "analyze" before creating incident
+            ai_result = ai_service.process_frame(None)
+            anomaly_result = ai_service.detect_anomalies([])
+            
+            # If AI detects something, or based on simulation
             incident = Incident(
                 type=incident_type,
                 severity=severity,
                 location=location[0],
                 latitude=location[1] + random.uniform(-0.01, 0.01),
                 longitude=location[2] + random.uniform(-0.01, 0.01),
-                description=f"{incident_type.replace('_', ' ').title()} detected at {location[0]}",
-                confidence=random.uniform(0.75, 0.98),
+                description=f"{incident_type.replace('_', ' ').title()} detected at {location[0]}. AI Confidence: {ai_result.get('count', 0)} persons found.",
+                confidence=ai_result.get('detections', [{'confidence': 0.8}])[0]['confidence'],
                 camera_id=f"CAM-{random.randint(1, 8):03d}",
                 status="active"
             )
