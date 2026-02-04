@@ -88,6 +88,10 @@ async def simulate_incidents():
             anomaly_result = ai_service.detect_anomalies([])
             
             # If AI detects something, or based on simulation
+            confidence_val = 0.8
+            if ai_result.get('detections') and len(ai_result['detections']) > 0:
+                confidence_val = ai_result['detections'][0].get('confidence', 0.8)
+
             incident = Incident(
                 type=incident_type,
                 severity=severity,
@@ -95,7 +99,7 @@ async def simulate_incidents():
                 latitude=location[1] + random.uniform(-0.01, 0.01),
                 longitude=location[2] + random.uniform(-0.01, 0.01),
                 description=f"{incident_type.replace('_', ' ').title()} detected at {location[0]}. AI Confidence: {ai_result.get('count', 0)} persons found.",
-                confidence=ai_result.get('detections', [{'confidence': 0.8}])[0]['confidence'],
+                confidence=confidence_val,
                 camera_id=f"CAM-{random.randint(1, 8):03d}",
                 status="active"
             )
