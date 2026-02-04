@@ -7,9 +7,11 @@ import { format } from 'date-fns';
 interface AlertPanelProps {
   alerts: Alert[];
   expanded?: boolean;
+  onAcknowledge?: (incidentId: string) => void;
+  onResolve?: (incidentId: string) => void;
 }
 
-export default function AlertPanel({ alerts, expanded }: AlertPanelProps) {
+export default function AlertPanel({ alerts, expanded, onAcknowledge, onResolve }: AlertPanelProps) {
   const severityStyles = {
     low: 'border-l-blue-400 bg-blue-50',
     medium: 'border-l-yellow-400 bg-yellow-50',
@@ -68,9 +70,20 @@ export default function AlertPanel({ alerts, expanded }: AlertPanelProps) {
                   </div>
                 </div>
               </div>
-              {!alert.acknowledged && (
-                <button className="p-1.5 hover:bg-white rounded-lg transition-colors">
+              {!alert.acknowledged ? (
+                <button 
+                  onClick={() => onAcknowledge?.(alert.incidentId)}
+                  className="p-1.5 hover:bg-white rounded-lg transition-colors"
+                  title="Acknowledge"
+                >
                   <Check className="w-4 h-4 text-gray-400 hover:text-green-500" />
+                </button>
+              ) : (
+                <button 
+                  onClick={() => onResolve?.(alert.incidentId)}
+                  className="p-1.5 hover:bg-white rounded-lg transition-colors text-xs font-medium text-blue-600 hover:text-blue-800"
+                >
+                  Resolve
                 </button>
               )}
             </div>

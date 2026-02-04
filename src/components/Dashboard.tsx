@@ -76,6 +76,38 @@ export default function Dashboard({ onLogout }: DashboardProps) {
     }
   };
 
+  const handleAcknowledge = async (incidentId: string) => {
+    try {
+      const response = await fetch(`/api/incidents/${incidentId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'acknowledged' }),
+      });
+      if (response.ok) {
+        setIncidents(prev => prev.map(i => i.id === incidentId ? { ...i, status: 'acknowledged' } : i));
+        setAlerts(prev => prev.map(a => a.incidentId === incidentId ? { ...a, acknowledged: true } : a));
+      }
+    } catch (error) {
+      console.error('Failed to acknowledge incident:', error);
+    }
+  };
+
+  const handleResolve = async (incidentId: string) => {
+    try {
+      const response = await fetch(`/api/incidents/${incidentId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'resolved' }),
+      });
+      if (response.ok) {
+        setIncidents(prev => prev.map(i => i.id === incidentId ? { ...i, status: 'resolved' } : i));
+        setAlerts(prev => prev.filter(a => a.incidentId !== incidentId));
+      }
+    } catch (error) {
+      console.error('Failed to resolve incident:', error);
+    }
+  };
+
   const activeIncidents = incidents.filter(i => i.status === 'active');
   const criticalCount = activeIncidents.filter(i => i.severity === 'critical').length;
   const onlineCameras = cameras.filter(c => c.status === 'online').length;
@@ -190,7 +222,11 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                   <VideoPanel cameras={cameras.slice(0, 4)} />
                 </div>
                 <div>
-                  <AlertPanel alerts={alerts.slice(0, 10)} />
+                  <AlertPanel 
+                    alerts={alerts.slice(0, 10)} 
+                    onAcknowledge={handleAcknowledge}
+                    onResolve={handleResolve}
+                  />
                 </div>
               </div>
 
@@ -215,7 +251,12 @@ export default function Dashboard({ onLogout }: DashboardProps) {
           )}
 
           {currentView === 'alerts' && (
-            <AlertPanel alerts={alerts} expanded />
+            <AlertPanel 
+              alerts={alerts} 
+              expanded 
+              onAcknowledge={handleAcknowledge}
+              onResolve={handleResolve}
+            />
           )}
 
           {currentView === 'analytics' && (
