@@ -58,3 +58,9 @@ packages = ["libxcrypt"]
 [deployment]
 deploymentTarget = "autoscale"
 run = ["bash", "-c", "cd backend && python main.py & npm run start"]
+
+[userenv]
+
+[userenv.shared]
+NEXT_PUBLIC_API_URL = "https://b8541d24-982f-4ccd-aabf-fee2ae51bb54-00-vkifhihicl2r.spock.replit.dev:8000"
+NEXT_PUBLIC_WS_URL = "wss://b8541d24-982f-4ccd-aabf-fee2ae51bb54-00-vkifhihicl2r.spock.replit.dev:8000"
