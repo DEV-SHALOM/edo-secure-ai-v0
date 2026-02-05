@@ -28,6 +28,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
   
   const { lastMessage, isConnected } = useWebSocket('/ws/alerts');
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
+
   useEffect(() => {
     fetchInitialData();
   }, []);
@@ -51,8 +53,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
   const fetchInitialData = async () => {
     try {
       const [incidentsRes, camerasRes] = await Promise.all([
-        fetch('/api/incidents'),
-        fetch('/api/cameras'),
+        fetch(`${API_URL}/api/incidents`),
+        fetch(`${API_URL}/api/cameras`),
       ]);
       
       if (incidentsRes.ok) {
@@ -78,7 +80,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
 
   const handleAcknowledge = async (incidentId: string) => {
     try {
-      const response = await fetch(`/api/incidents/${incidentId}`, {
+      const response = await fetch(`${API_URL}/api/incidents/${incidentId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'acknowledged' }),
@@ -94,7 +96,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
 
   const handleResolve = async (incidentId: string) => {
     try {
-      const response = await fetch(`/api/incidents/${incidentId}`, {
+      const response = await fetch(`${API_URL}/api/incidents/${incidentId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'resolved' }),

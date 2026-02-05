@@ -53,3 +53,7 @@ externalPort = 8000
 
 [nix]
 channel = "stable-25_05"
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["bash", "-c", "cd backend && python main.py & npm run start"]
