@@ -26,11 +26,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5000",
-        "https://edo-secure-ai-v0-21bb.vercel.app",
-        "https://b8541d24-982f-4ccd-aabf-fee2ae51bb54-00-vkifhihicl2r.spock.replit.dev"
-    ],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
